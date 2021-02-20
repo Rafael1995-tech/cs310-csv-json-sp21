@@ -3,7 +3,7 @@ package edu.jsu.mcis;
 import java.io.*;
 
 public class Main {
-    String a ;
+    
     public static void main(String[] args) {
         
         ClassLoader loader = ClassLoader.getSystemClassLoader();
