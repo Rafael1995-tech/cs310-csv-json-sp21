@@ -68,7 +68,36 @@ public class Converter {
             Iterator<String[]> iterator = full.iterator();
             
             // INSERT YOUR CODE HERE
-            
+             JSONArray colHeaders = new JSONArray();
+            JSONArray rowHeaders = new JSONArray();
+            JSONArray data = new JSONArray();
+            String[] cols = iterator.next();
+            //adding the names to the column heads
+            /*
+            for(int i = 0; i < 6; i++){
+                cols.append(i);
+            }
+            */
+            colHeaders.add("ID"); colHeaders.add("Total"); colHeaders.add("Assignment 1"); colHeaders.add("Assignment 2"); colHeaders.add("Exam 1");
+            jsonObject.put("colHeaders", colHeaders); jsonObject.put("rowHeaders", rowHeaders); jsonObject.put("data", data);
+
+            String line = bReader.readLine();
+            while((line = bReader.readLine()) != null){
+                    String[] parsedData = parser.parseLine(line);
+                    rowHeaders.add(parsedData[0]);
+                    JSONArray rows = new JSONArray();
+                    rows.add(new Long(parsedData[1]));
+                    rows.add(new Long(parsedData[2]));
+                    rows.add(new Long(parsedData[3]));
+                    rows.add(new Long(parsedData[4]));
+                    data.add(rows);
+            }
+        }
+        
+        catch(IOException e) { return e.toString(); }
+        return jsonObject.toString();
+        
+    }
         }        
         catch(Exception e) { return e.toString(); }
         
@@ -87,12 +116,51 @@ public class Converter {
             
             // INSERT YOUR CODE HERE
             
+         int j = 0;
+            int counter = 1;
+            
+            //for loop to print the column headers
+            for(int i = 0; i < cols.size(); i++){
+                if(i != cols.size()-1){
+                    writer.append("\""+cols.get(i)+"\",");
+                }
+                else{
+                    writer.append("\""+cols.get(i)+"\"");
+                }
+            }
+            writer.append("\n");
+            
+            /*
+            for loop to print the rows with a nested while and for loop to print the data per each row
+            */
+            for(int i = 0; i < rows.size(); i++){
+                writer.append("\""+rows.get(i)+"\",");
+                while(j < counter){
+                    JSONArray part = (JSONArray)datas.get(j);
+                    for(int k = 0; k < part.size(); k++){
+                        if(k != part.size()-1){
+                            writer.append("\""+part.get(k)+"\",");
+                        }
+                        else{
+                            writer.append("\""+part.get(k)+"\"");
+                        }
+                    }
+                    j++;
+                }
+                counter++;
+                writer.append("\n");
+            }
+            
+            results += writer.toString();
         }
         
-        catch(Exception e) { return e.toString(); }
+        catch(ParseException e) { return e.toString(); }
         
         return results.trim();
         
-    }
+        
 
 }
+
+
+
