@@ -7,7 +7,7 @@ import org.json.simple.*;
 import org.json.simple.parser.*;
 
 public class Converter {
-    
+    int b;
     /*
     
         Consider the following CSV data:
