@@ -1,5 +1,7 @@
-package edu.jsu.mcis;
+package test.edu.jsu.mcis;
 
+
+import edu.jsu.mcis.Converter;
 import org.junit.*;
 import static org.junit.Assert.*;
 import org.json.simple.*;
@@ -35,7 +37,7 @@ public class ConverterTest {
             
         }
         
-        catch(IOException e) { e.printStackTrace(); }
+        catch(IOException e) {}
         
         csvString = csv.toString().trim();
         
